@@ -4,15 +4,19 @@ import org.junit.Test;
 import io.github.r0land013.showly.slides.Slide;
 import io.github.r0land013.showly.slides.exception.InvalidSlideFile;
 import org.junit.Before;
+import org.apache.poi.hslf.usermodel.HSLFSlide;
+import org.apache.poi.hslf.usermodel.HSLFSlideShow;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 import static io.github.r0land013.showly.TestConstants.SHOWLY_TEST_PORT;
 import static io.github.r0land013.showly.TestConstants.SHOWLY_TEST_URL;
-import static io.github.r0land013.showly.TestUtil.getFileInputStream;
+import static io.github.r0land013.showly.TestUtil.getFilePath;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,7 +34,7 @@ public class ShowlyTest {
     @Test
     public void isShowlySeverRunning() throws IOException, InvalidSlideFile {
 
-        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFileInputStream("/presentation.pptx"));
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/presentation.pptx"));
         showlyServer = new Showly(config);
         showlyServer.show();
 
@@ -63,13 +67,26 @@ public class ShowlyTest {
 
     @Test
     public void areSlidesExtractedFromXMLFileAfterShowlyIsStarted() throws IOException, InvalidSlideFile {
-        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFileInputStream("/presentation.pptx"));
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/presentation.pptx"));
         showlyServer = new Showly(config);
         List<Slide> extractedSlides = showlyServer.show();
         showlyServer.stop();
         
-        XMLSlideShow pptx = new XMLSlideShow(getFileInputStream("/presentation.pptx"));
+        XMLSlideShow pptx = new XMLSlideShow(new FileInputStream(getFilePath("/presentation.pptx")));
         List<XSLFSlide> slides = pptx.getSlides();
+        
+        assertTrue(slides.size() == extractedSlides.size());
+    }
+
+    @Test
+    public void areSlidesExtractedFromBinaryFileAfterShowlyIsStarted() throws IOException, InvalidSlideFile {
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/binary.ppt"));
+        showlyServer = new Showly(config);
+        List<Slide> extractedSlides = showlyServer.show();
+        showlyServer.stop();
+        
+        HSLFSlideShow ppt = new HSLFSlideShow(new FileInputStream(getFilePath("/binary.ppt")));
+        List<HSLFSlide> slides = ppt.getSlides();
         
         assertTrue(slides.size() == extractedSlides.size());
     }
