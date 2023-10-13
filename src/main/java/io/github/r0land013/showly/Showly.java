@@ -3,8 +3,8 @@ package io.github.r0land013.showly;
 import java.io.IOException;
 import java.util.List;
 import io.github.r0land013.showly.slides.Slide;
-import static io.github.r0land013.showly.slides.SlideExtractor.extractSlidesFromFile;;
-import io.github.r0land013.showly.slides.exception.InvalidSlideFile;
+import static io.github.r0land013.showly.slides.SlideExtractor.extractSlidesFromFile;
+import io.github.r0land013.showly.slides.exception.InvalidSlideFileException;
 import io.github.r0land013.showly.web.ShowlyServer;
 
 public class Showly {
@@ -16,7 +16,7 @@ public class Showly {
         showlyConfig = config;
     }
 
-    public List<Slide> show() throws IOException, InvalidSlideFile {
+    public List<Slide> show() throws IOException, InvalidSlideFileException {
         List<Slide> slides = extractSlidesFromFile(showlyConfig.getSlideFilePath());
 
         startWebServer();

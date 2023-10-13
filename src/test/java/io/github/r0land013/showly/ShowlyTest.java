@@ -2,7 +2,8 @@ package io.github.r0land013.showly;
 
 import org.junit.Test;
 import io.github.r0land013.showly.slides.Slide;
-import io.github.r0land013.showly.slides.exception.InvalidSlideFile;
+import io.github.r0land013.showly.slides.exception.InvalidSlideFileException;
+
 import org.junit.Before;
 import org.apache.poi.hslf.usermodel.HSLFSlide;
 import org.apache.poi.hslf.usermodel.HSLFSlideShow;
@@ -32,7 +33,7 @@ public class ShowlyTest {
     }
 
     @Test
-    public void isShowlySeverRunning() throws IOException, InvalidSlideFile {
+    public void isShowlySeverRunning() throws IOException, InvalidSlideFileException {
 
         ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/presentation.pptx"));
         showlyServer = new Showly(config);
@@ -66,7 +67,7 @@ public class ShowlyTest {
     }
 
     @Test
-    public void areSlidesExtractedFromXMLFileAfterShowlyIsStarted() throws IOException, InvalidSlideFile {
+    public void areSlidesExtractedFromXMLFileAfterShowlyIsStarted() throws IOException, InvalidSlideFileException {
         ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/presentation.pptx"));
         showlyServer = new Showly(config);
         List<Slide> extractedSlides = showlyServer.show();
@@ -79,7 +80,7 @@ public class ShowlyTest {
     }
 
     @Test
-    public void areSlidesExtractedFromBinaryFileAfterShowlyIsStarted() throws IOException, InvalidSlideFile {
+    public void areSlidesExtractedFromBinaryFileAfterShowlyIsStarted() throws IOException, InvalidSlideFileException {
         ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/binary.ppt"));
         showlyServer = new Showly(config);
         List<Slide> extractedSlides = showlyServer.show();
@@ -89,5 +90,35 @@ public class ShowlyTest {
         List<HSLFSlide> slides = ppt.getSlides();
         
         assertTrue(slides.size() == extractedSlides.size());
+    }
+
+    @Test
+    public void extractingSlidesFromNonSlideFileThrowsException() throws IOException {
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/document.docx"));
+        showlyServer = new Showly(config);
+        
+        try {
+            showlyServer.show();
+            showlyServer.stop();
+            fail("InvalidSlideFileException not thrown");
+        }
+        catch (InvalidSlideFileException e) {
+            // success
+        }
+    }
+
+    @Test
+    public void extractingSlidesFromNonExistentFileThrowsException() throws InvalidSlideFileException {
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, "./non_existent_file.ppt");
+        showlyServer = new Showly(config);
+        
+        try {
+            showlyServer.show();
+            showlyServer.stop();
+            fail("IOException not thrown");
+        }
+        catch (IOException e) {
+            // success
+        }
     }
 }

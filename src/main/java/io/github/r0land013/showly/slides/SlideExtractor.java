@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.LinkedList;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
-import io.github.r0land013.showly.slides.exception.InvalidSlideFile;
+import io.github.r0land013.showly.slides.exception.InvalidSlideFileException;
 import org.apache.poi.hslf.usermodel.HSLFSlide;
 import org.apache.poi.hslf.usermodel.HSLFSlideShow;
 import org.apache.poi.ooxml.POIXMLException;
@@ -21,7 +21,7 @@ import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 public class SlideExtractor {
     
 
-    static private List<Slide> extractSlidesFromXMLSlides(String slideFilePath) throws IOException, InvalidSlideFile {
+    static private List<Slide> extractSlidesFromXMLSlides(String slideFilePath) throws IOException, InvalidSlideFileException {
         
         List<Slide> slideList = new LinkedList<Slide>();
 
@@ -51,10 +51,10 @@ public class SlideExtractor {
         }
         
         catch (OLE2NotOfficeXmlFileException e) {
-            throw new InvalidSlideFile("Invalid XML slide file.");
+            throw new InvalidSlideFileException("Invalid XML slide file.");
         }
         catch (POIXMLException e) {
-            throw new InvalidSlideFile("Invalid XML slide file.");
+            throw new InvalidSlideFileException("Invalid XML slide file.");
         }
         catch (IOException e) {
             throw e;
@@ -63,7 +63,7 @@ public class SlideExtractor {
         return slideList;
     }
 
-    static private List<Slide> extractSlidesFromBinarySlides(String slideFilePath) throws IOException, InvalidSlideFile {
+    static private List<Slide> extractSlidesFromBinarySlides(String slideFilePath) throws IOException, InvalidSlideFileException {
         
         List<Slide> slideList = new LinkedList<Slide>();
 
@@ -93,7 +93,7 @@ public class SlideExtractor {
         }
         
         catch (OfficeXmlFileException e) {
-            throw new InvalidSlideFile("This file is an XML based file.");
+            throw new InvalidSlideFileException("This file is an XML based file.");
         }
         catch (IOException e) {
             throw e;
@@ -102,19 +102,19 @@ public class SlideExtractor {
         return slideList;
     }
 
-    static public List<Slide> extractSlidesFromFile(String slideFilePath) throws IOException, InvalidSlideFile {
+    static public List<Slide> extractSlidesFromFile(String slideFilePath) throws IOException, InvalidSlideFileException {
 
         try {
             return extractSlidesFromXMLSlides(slideFilePath);
         }
-        catch (InvalidSlideFile e) {
+        catch (InvalidSlideFileException e) {
             // The file is not xml slide file
         }
         
         try {
             return extractSlidesFromBinarySlides(slideFilePath);
-        } catch (InvalidSlideFile e) {
-            throw new InvalidSlideFile("This is not xml or binary slide file.");
+        } catch (InvalidSlideFileException e) {
+            throw new InvalidSlideFileException("This is not xml or binary slide file.");
         }
         
 
