@@ -1,23 +1,25 @@
 package io.github.r0land013.showly;
 
+import java.io.FileInputStream;
 
 public class ShowlyConfig {
     
     final static int DEFAULT_PORT = 80;
 
-
     private int port = DEFAULT_PORT;
+    private FileInputStream slideFileStream;
 
-    private ShowlyConfig(int port) {
+    public ShowlyConfig(int port, FileInputStream slideFileStream) {
         this.port = port;
+        this.slideFileStream = slideFileStream;
     }
 
     public int getPort() {
         return port;
     }
 
-    public static ShowlyConfig create(int port) {
-        return new ShowlyConfig(port);
+    public FileInputStream getSlideFileStream() {
+        return slideFileStream;
     }
 
 }
