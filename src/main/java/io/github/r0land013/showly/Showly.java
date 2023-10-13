@@ -11,20 +11,21 @@ public class Showly {
 
     private ShowlyConfig showlyConfig;
     private ShowlyServer showlyServer;
+    private List<Slide> slides;
 
     public Showly(ShowlyConfig config) {
         showlyConfig = config;
     }
 
     public List<Slide> show() throws IOException, InvalidSlideFileException {
-        List<Slide> slides = extractSlidesFromFile(showlyConfig.getSlideFilePath());
+        slides = extractSlidesFromFile(showlyConfig.getSlideFilePath());
 
         startWebServer();
         return slides.subList(0, slides.size());
     }
 
     private void startWebServer() {
-        showlyServer = new ShowlyServer(showlyConfig.getPort());
+        showlyServer = new ShowlyServer(showlyConfig.getPort(), slides);
         showlyServer.start();
     }
 
