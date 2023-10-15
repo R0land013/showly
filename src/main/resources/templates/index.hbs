@@ -1,0 +1,400 @@
+<html>
+
+<head>
+
+    <meta charset="utf-8"/>
+
+    <title>Showly</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Ubuntu, Verdana, Geneva, Tahoma, sans-serif;
+        }
+        
+        /* Header start*/
+        header {
+            background-color: green;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: end;
+        }
+        .logo-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .showly-logo {
+            height: 3rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .github-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+        .github-logo {
+            height: 2rem;
+        }
+        /* Header end*/
+        
+        /* Main start*/
+        main {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .viewer-outer-container {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .viewer-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        #viewer {
+            height: 39vw;
+            width: 70vw;
+            background-color: silver;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: end;
+        }
+        #slide-controls-on-fullscreen {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        #viewer:fullscreen #slide-controls-on-fullscreen {
+            width: 50%;
+            height: 100%;
+        }
+        #viewer:fullscreen .viewer-controls-container {
+            justify-content: space-between;
+        }
+        #slide-container {
+            width: 100%;
+            height: 94%;
+        }
+        .current-slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .viewer-controls-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            height: 6%;
+            width: 100%;
+            background-color: black;
+            color: white;
+        }
+        #silde-position {
+            margin-left: 5px;
+        }
+        #fullscreen-button img {
+            height: 100%;
+        }
+        #fullscreen-button {
+            margin-right: 10px;
+            margin-bottom: 5px;
+            margin-top: 5px;
+            height: 80%;
+        }
+        .slide-loading-container {
+            width: 100%;
+            height: 94%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .slide-loading-container img {
+            width: 100%;
+            height: 100%;
+        }
+        .viewer-outer-slide-controls-container {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2%;
+        }
+        .no-style-button {
+            background: none;
+            color: inherit;
+            border: none;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+        }
+        .slide-control-button img {
+            height: 2rem;
+        }
+        .slide-button-on-viewer {
+            height: 75%;
+        }
+        .slide-button-on-viewer img {
+            height: 100%;
+        }
+        .slide-button-on-viewer img:hover {
+            filter: opacity(65%);
+            border-radius: 200px;
+            box-shadow: 2px 2px silver;
+        }
+        #previous-slide-button-image {
+            transform: scaleX(-1);
+        }
+        #next-slide-button-on-viewer {
+            margin-left: 2rem;
+        }
+        .creator-container {
+            margin-top: 2rem;
+        }
+        .creator {
+            text-decoration: none;
+            color: green;
+            font-weight: bold;
+        }
+        .creator:hover {
+            filter: opacity(65%);
+            text-shadow: 2px 2px 1px silver;
+        }
+        /* Main end*/
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <header>
+            
+            <div class="github-container" style="opacity: 0;">
+                <img class="github-logo" src="assets/images/github.svg"/>
+            </div>
+
+            <div class="logo-container">
+                <img class="showly-logo" src="assets/images/logo.svg"/>
+                <h1>Showly</h1>
+            </div>
+
+            <div class="github-container">
+                <a href="https://github.com/R0land013/showly">
+                    <img class="github-logo" src="assets/images/github.svg"/>
+                </a>
+            </div>
+        </header>
+
+        <main>
+            <div>
+                <h1>Presentation name</h1>
+            </div>
+
+            <div class="viewer-outer-container">
+
+                <div class="viewer-container">
+
+                    <div id="viewer">
+
+                        
+                        <div id="slide-container">
+                            
+                            <div class="slide-loading-container">
+                                <img src="assets/images/loading.svg"/>
+                            </div>
+                        
+                        </div>
+                        
+                        <div class="viewer-controls-container">
+                            <label id="silde-position">
+                                1/20
+                            </label>
+
+                            <div id="slide-controls-on-fullscreen">
+                                <button
+                                    class="no-style-button slide-button-on-viewer"
+                                    id="previous-slide-button-on-viewer">
+                                    <img src="assets/images/move-slide-button.svg" id="previous-slide-button-image"/>
+                                </button>
+            
+                                <button
+                                    class="no-style-button slide-button-on-viewer"
+                                    id="next-slide-button-on-viewer">
+                                    <img src="assets/images/move-slide-button.svg"/>
+                                </button>
+                            </div>
+    
+                            <button class="no-style-button" id="fullscreen-button">
+                                <img src="assets/images/fullscreen.svg" id="fullscreen-button-image"/>
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="creator-container">
+                <span>
+                    Made with 💚 by <a href="https://github.com/R0land013" class="creator">R0land013</a>
+                </span>
+            </div>
+        </main>
+    </div>
+</body>
+
+
+<script>
+    /* Fullscreen control */
+
+    function goFullScreen() {
+        const viewer = document.getElementById('viewer');
+        viewer.requestFullscreen();
+        const fullscreenButton = document.getElementById('fullscreen-button-image');
+        fullscreenButton.setAttribute('src', 'assets/images/fullscreen-exit.svg');
+    }
+
+    function leaveFullScreen() {
+        document.exitFullscreen();
+        const fullscreenButton = document.getElementById('fullscreen-button-image');
+        fullscreenButton.setAttribute('src', 'assets/images/fullscreen.svg');
+    }
+
+    function isViewerOnFullScreen() {
+        const fullscreenElement = document.fullscreenElement;
+        const viewer = document.getElementById('viewer');
+        return viewer === fullscreenElement;
+    }
+
+    document.getElementById('fullscreen-button').addEventListener('click', () => {
+        if(isViewerOnFullScreen()) {
+            leaveFullScreen();
+        }
+        else {
+            goFullScreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if(!isViewerOnFullScreen()) {
+            const fullscreenButton = document.getElementById('fullscreen-button-image');
+            fullscreenButton.setAttribute('src', 'assets/images/fullscreen.svg');
+        }
+    })
+</script>
+
+<script>
+    /* Slide viewer control */
+    const slideQuantity = {{ slideQuantity }};
+    const slideImageURLs = Array.apply(null, Array(slideQuantity)).map(function () { });
+    const slidesBeingRetrievedAndAlreadyRetrieved = Array.apply(null, Array(slideQuantity)).map(function () { });
+    let currentSlideBeingDisplayed = 0;
+
+    function getSlideImageByIndex(slideIndex) {
+        if(slidesBeingRetrievedAndAlreadyRetrieved[slideIndex]) {
+            return;
+        }
+
+        slidesBeingRetrievedAndAlreadyRetrieved[slideIndex] = true;
+        
+        const request = new XMLHttpRequest();
+        request.responseType = 'blob';
+        slidesBeingRetrievedAndAlreadyRetrieved
+        request.open('GET', `/slides/${slideIndex}`);
+        
+        request.onreadystatechange = () => {
+            
+            if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+                const imageURL = URL.createObjectURL(request.response);
+                slideImageURLs[slideIndex] = imageURL;
+                setSlideOnViewer();
+            }
+        };
+
+        request.send();
+    }
+
+    function setSlideOnViewer() {
+        const slideContainer = document.getElementById('slide-container');
+        
+        if(slideImageURLs[currentSlideBeingDisplayed]) {
+            slideContainer.innerHTML = `
+            <img
+            class="current-slide-image"
+            src="${slideImageURLs[currentSlideBeingDisplayed]}"/>
+            `;
+        }
+        else {
+            slideContainer.innerHTML = `
+            <div class="slide-loading-container">
+                <img src="assets/images/loading.svg"/>
+            </div>
+            `;
+        }
+    }
+
+    function setSlidePositionLabel() {
+        document.getElementById('silde-position').innerHTML =
+            `${currentSlideBeingDisplayed + 1}/${slideQuantity}`;
+    }
+
+    const showNextSlide = () => {
+        if(currentSlideBeingDisplayed + 1 >= slideQuantity) {
+            return;
+        }
+
+        currentSlideBeingDisplayed += 1;
+        setSlidePositionLabel();
+        getSlideImageByIndex(currentSlideBeingDisplayed);
+        setSlideOnViewer();
+    };
+
+    const showPreviousSlide = () => {
+
+        if(currentSlideBeingDisplayed - 1 < 0) {
+            return;
+        }
+
+        currentSlideBeingDisplayed -= 1;
+        setSlidePositionLabel()
+        getSlideImageByIndex(currentSlideBeingDisplayed);
+        setSlideOnViewer();
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setSlidePositionLabel();
+        getSlideImageByIndex(currentSlideBeingDisplayed);
+        
+        const previousSlideButtonOnViewer = document.getElementById('previous-slide-button-on-viewer');
+        const nextSlideButtonOnViewer = document.getElementById('next-slide-button-on-viewer');
+
+        nextSlideButtonOnViewer.addEventListener('click', showNextSlide);
+        previousSlideButtonOnViewer.addEventListener('click', showPreviousSlide);
+    });
+
+
+</script>
+
+</html>

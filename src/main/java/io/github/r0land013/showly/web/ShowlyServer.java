@@ -7,6 +7,9 @@ import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import io.github.r0land013.showly.slides.Slide;
 import io.javalin.Javalin;
+import io.javalin.http.staticfiles.Location;
+
+import static io.github.r0land013.showly.web.WebSiteGenerator.generateShowlyWebSite;
 
 
 public class ShowlyServer {
@@ -16,18 +19,30 @@ public class ShowlyServer {
     private List<Slide> slides;
     private List<byte[]> slidesAsBytes;
 
+    
+
     public ShowlyServer(int port, List<Slide> slides) {
         this.port = port;
         this.slides = slides;
     }
 
     public void start() {
-        javalinServer = Javalin.create()
-        .get("/", ctx -> ctx.result("Welcome to Showly! :)"));
         
+        createJavalinWithStaticFileConfig();
         createEndpointToAccessSlideImages();
-
+        prepareShowlyWebSite();
+        
         javalinServer.start(port);
+    }
+
+    private void createJavalinWithStaticFileConfig() {
+        javalinServer = Javalin.create(config -> {
+            config.staticFiles.add(staticFiles -> {
+                staticFiles.hostedPath = "/";                   // change to host files on a subpath, like '/assets'
+                staticFiles.directory = "/static";              // the directory where your files are located
+                staticFiles.location = Location.CLASSPATH;
+            });
+        });
     }
     
     private void createEndpointToAccessSlideImages () {
@@ -60,6 +75,15 @@ public class ShowlyServer {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    private void prepareShowlyWebSite() {
+        String renderedWebSite = generateShowlyWebSite(slides.size());
+        
+        javalinServer = javalinServer.get("/", ctx -> {
+            ctx.contentType("text/html");
+            ctx.result(renderedWebSite);
+        });
     }
 
     public void stop() {
