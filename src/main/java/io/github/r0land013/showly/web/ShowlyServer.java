@@ -15,15 +15,17 @@ import static io.github.r0land013.showly.web.WebSiteGenerator.generateShowlyWebS
 public class ShowlyServer {
     
     private int port;
+    private String presentationName;
     private Javalin javalinServer;
     private List<Slide> slides;
     private List<byte[]> slidesAsBytes;
 
     
 
-    public ShowlyServer(int port, List<Slide> slides) {
+    public ShowlyServer(int port, List<Slide> slides, String presentationName) {
         this.port = port;
         this.slides = slides;
+        this.presentationName = presentationName;
     }
 
     public void start() {
@@ -78,7 +80,7 @@ public class ShowlyServer {
     }
 
     private void prepareShowlyWebSite() {
-        String renderedWebSite = generateShowlyWebSite(slides.size());
+        String renderedWebSite = generateShowlyWebSite(slides.size(), presentationName);
         
         javalinServer = javalinServer.get("/", ctx -> {
             ctx.contentType("text/html");

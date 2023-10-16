@@ -25,7 +25,7 @@ public class Showly {
     }
 
     private void startWebServer() {
-        showlyServer = new ShowlyServer(showlyConfig.getPort(), slides);
+        showlyServer = new ShowlyServer(showlyConfig.getPort(), slides, showlyConfig.getPresentationName());
         showlyServer.start();
     }
 

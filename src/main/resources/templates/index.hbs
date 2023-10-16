@@ -54,6 +54,10 @@
             justify-content: center;
             margin-bottom: 20px;
         }
+        .presentation-name-container {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
         .viewer-outer-container {
             width: 90%;
             display: flex;
@@ -208,8 +212,10 @@
         </header>
 
         <main>
-            <div>
-                <h1>Presentation name</h1>
+            <div class="presentation-name-container">
+                {{#if presentationName }}
+                    <h1 id="presentation-name">{{ presentationName }}</h1>
+                {{/if}}
             </div>
 
             <div class="viewer-outer-container">

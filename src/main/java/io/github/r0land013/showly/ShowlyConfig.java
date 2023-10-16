@@ -6,10 +6,17 @@ public class ShowlyConfig {
 
     private int port = DEFAULT_PORT;
     private String slideFilePath;
+    private String presentationName;
 
     public ShowlyConfig(int port, String slideFilePath) {
         this.port = port;
         this.slideFilePath = slideFilePath;
+    }
+    
+    public ShowlyConfig(int port, String slideFilePath, String presentationName) {
+        this.port = port;
+        this.slideFilePath = slideFilePath;
+        this.presentationName = presentationName;
     }
 
     public int getPort() {
@@ -18,6 +25,10 @@ public class ShowlyConfig {
 
     public String getSlideFilePath() {
         return slideFilePath;
+    }
+
+    public String getPresentationName() {
+        return presentationName;
     }
 
 }
