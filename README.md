@@ -22,6 +22,24 @@ that serves a web page with a simple web app that displays the slides.
 
 ## Usage
 
+For adding Showly to your project as a dependency you can add the following to your pom.xml if you are using Maven:
+
+```xml
+<dependency>
+  <groupId>io.github.r0land013</groupId>
+  <artifactId>showly</artifactId>
+  <version>0.1.0</version>
+</dependency>
+```
+
+If you are using Gradle, add this to your build.gradle:
+
+```groovy
+dependencies {
+    implementation 'io.github.r0land013:showly:0.1.0'
+}
+```
+
 For now, Showly support Power Point binary and xml formats. You can use Showly like this:
 
 ```Java
