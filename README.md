@@ -1,7 +1,6 @@
 
-<div style="display:flex; flex-direction:row; justify-content:center; align-items:center; align-content:center; justify-items:center; width:100%; background-color:green; border-radius: 15px; padding:2rem;">
-    <img src="src/main/resources/static/assets/images/logo.svg" alt="Logo" style="height:50px;">
-    <h1 style="color:white;text-align: center;">Showly</h1>
+<div style="display:flex; flex-direction:row; justify-content:center; align-items:center; align-content:center; justify-items:center; width:100%;">
+    <img src="readme_assets/logo.svg" alt="Logo" style="height:100%; width:100%">
 </div>
 
 ## About the project
@@ -19,6 +18,7 @@ that serves a web page with a simple web app that displays the slides.
 - [Maven](https://maven.apache.org/index.html)
 - [Javalin](https://javalin.io/)
 - [Apache POI](https://poi.apache.org/)
+- [Handlebars.java](https://github.com/jknack/handlebars.java)
 
 ## Usage
 
@@ -43,12 +43,17 @@ dependencies {
 For now, Showly support Power Point binary and xml formats. You can use Showly like this:
 
 ```Java
+import io.github.r0land013.showly.Showly;
+import io.github.r0land013.showly.ShowlyConfig;
+import io.github.r0land013.showly.slides.Slide;
+
+
 // Create a Showly instance with port and slide file path
 ShowlyConfig config = new ShowlyConfig(8080, "slides.pptx");
 Showly showly = new Showly(config);
 
 // Extract slides and start web server
-showly.show();
+List<Silde> slides = showly.show();
 
 // Stop server when done
 showly.stop();
@@ -66,7 +71,7 @@ But if you want to test locally you can open this in your browser:
 ## Contribuiting
 
 If you wish to contribute with some ideas and bug fixes open an issue describing it.
-If you have some great changes to add, please open a Pull Request.
+If you have some great changes to add, please, open a Pull Request.
 
 ### Running Tests
 Tests are written with JUnit. To run:
