@@ -10,6 +10,29 @@
 
   <name>Showly</name>
   <url>https://github.com/R0land013/showly</url>
+  <description>A java package for showing your slides on LAN network</description>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>https://opensource.org/license/mit/</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>R0land013</id>
+      <name>Rolando Rio Garaboa</name>
+      <url>https://github.com/R0land013</url>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com:R0land013/showly.git</connection>
+    <developerConnection>scm:git:git@github.com:R0land013/showly.git</developerConnection>
+    <url>scm:git:git@github.com:R0land013/showly.git</url>
+    <tag>HEAD</tag>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -158,6 +181,9 @@
               <goals>
                   <goal>jar</goal>
               </goals>
+              <configuration>
+                <attachJavadocs>true</attachJavadocs>
+              </configuration>
             </execution>
           </executions>
         </plugin>
