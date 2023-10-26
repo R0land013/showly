@@ -152,4 +152,34 @@ public class ShowlyTest {
             return false;
         }
     }
+
+    @Test
+    public void areSlidesExtractedFromXMLSlideInputStream() throws IOException, InvalidSlideFileException {
+        
+        FileInputStream inputStream = new FileInputStream(getFilePath("/presentation.pptx"));
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, inputStream);
+        showlyServer = new Showly(config);
+        List<Slide> extractedSlides = showlyServer.show();
+        showlyServer.stop();
+
+        XMLSlideShow pptx = new XMLSlideShow(new FileInputStream(getFilePath("/presentation.pptx")));
+        List<XSLFSlide> slides = pptx.getSlides();
+        pptx.close();
+
+        assertTrue(slides.size() == extractedSlides.size());
+    }
+
+    @Test
+    public void areSlidesExtractedFromBinarySlideInputStream() throws IOException, InvalidSlideFileException {
+        FileInputStream inputStream = new FileInputStream(getFilePath("/binary.ppt"));
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, inputStream);
+        showlyServer = new Showly(config);
+        List<Slide> extractedSlides = showlyServer.show();
+        showlyServer.stop();
+
+        HSLFSlideShow ppt = new HSLFSlideShow(new FileInputStream(getFilePath("/binary.ppt")));
+        List<HSLFSlide> slides = ppt.getSlides();
+
+        assertTrue(slides.size() == extractedSlides.size());
+    }
 }
