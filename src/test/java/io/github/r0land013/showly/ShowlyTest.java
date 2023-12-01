@@ -3,6 +3,7 @@ package io.github.r0land013.showly;
 import org.junit.Test;
 import io.github.r0land013.showly.slides.Slide;
 import io.github.r0land013.showly.slides.exception.InvalidSlideFileException;
+import io.github.r0land013.showly.web.exception.PortBeingUsedException;
 import org.junit.Before;
 import org.apache.poi.hslf.usermodel.HSLFSlide;
 import org.apache.poi.hslf.usermodel.HSLFSlideShow;
@@ -12,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.List;
 import static io.github.r0land013.showly.TestConstants.SHOWLY_TEST_PORT;
 import static io.github.r0land013.showly.TestConstants.SHOWLY_TEST_URL;
@@ -237,6 +239,24 @@ public class ShowlyTest {
         List<HSLFSlide> slides = ppt.getSlides();
 
         assertTrue(slides.size() == extractedSlides.size());
+    }
+
+    @Test
+    public void throwExceptionIfPortIsAlreadyInUse() throws IOException, InvalidSlideFileException {
+        ServerSocket serverSocket = new ServerSocket(SHOWLY_TEST_PORT);
+
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/binary.ppt"));
+        showlyServer = new Showly(config);
+        try {
+            showlyServer.show();
+            fail();
+        }
+        catch(PortBeingUsedException e) {
+            // success
+        }
+        finally{
+            serverSocket.close();
+        }
     }
 
 }

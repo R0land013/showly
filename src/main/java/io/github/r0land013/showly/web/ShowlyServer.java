@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import io.github.r0land013.showly.slides.Slide;
+import io.github.r0land013.showly.web.exception.PortBeingUsedException;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
+import io.javalin.util.JavalinBindException;
 
 import static io.github.r0land013.showly.web.WebSiteGenerator.generateShowlyWebSite;
 
@@ -34,7 +36,7 @@ public class ShowlyServer {
         createEndpointToAccessSlideImages();
         prepareShowlyWebSite();
         
-        javalinServer.start(port);
+        startJavalinServer();
     }
 
     private void createJavalinWithStaticFileConfig() {
@@ -86,6 +88,15 @@ public class ShowlyServer {
             ctx.contentType("text/html");
             ctx.result(renderedWebSite);
         });
+    }
+
+    private void startJavalinServer() {
+        try {
+            javalinServer.start(port);
+        }
+        catch (JavalinBindException e) {
+            throw new PortBeingUsedException(port);
+        }
     }
 
     public void stop() {
