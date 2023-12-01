@@ -14,11 +14,13 @@ import java.util.LinkedList;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import io.github.r0land013.showly.slides.exception.InvalidSlideFileException;
+
+import org.apache.poi.EmptyFileException;
+import org.apache.poi.UnsupportedFileFormatException;
 import org.apache.poi.hslf.usermodel.HSLFSlide;
 import org.apache.poi.hslf.usermodel.HSLFSlideShow;
 import org.apache.poi.ooxml.POIXMLException;
-import org.apache.poi.openxml4j.exceptions.OLE2NotOfficeXmlFileException;
-import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
+import org.apache.poi.poifs.filesystem.NotOLE2FileException;
 
 public class SlideExtractor {
     
@@ -31,10 +33,7 @@ public class SlideExtractor {
             return getSlidesFromXMLSlideFile(pptx);
         }
         
-        catch (OLE2NotOfficeXmlFileException e) {
-            throw new InvalidSlideFileException("Invalid XML slide file.");
-        }
-        catch (POIXMLException e) {
+        catch (UnsupportedFileFormatException | EmptyFileException | POIXMLException | NotOLE2FileException e) {
             throw new InvalidSlideFileException("Invalid XML slide file.");
         }
         catch (IOException e) {
@@ -76,8 +75,8 @@ public class SlideExtractor {
             return getSlidesFromBinarySlideFile(ppt);
         }
         
-        catch (OfficeXmlFileException e) {
-            throw new InvalidSlideFileException("This file is an XML based file.");
+        catch (UnsupportedFileFormatException | EmptyFileException | NotOLE2FileException e) {
+            throw new InvalidSlideFileException("Invalid binary slide file.");
         }
         catch (IOException e) {
             throw e;
@@ -158,10 +157,7 @@ public class SlideExtractor {
             return getSlidesFromXMLSlideFile(pptx);
         }
         
-        catch (OLE2NotOfficeXmlFileException e) {
-            throw new InvalidSlideFileException("Invalid XML slide file.");
-        }
-        catch (POIXMLException e) {
+        catch (UnsupportedFileFormatException | EmptyFileException | POIXMLException | NotOLE2FileException e) {
             throw new InvalidSlideFileException("Invalid XML slide file.");
         }
         catch (IOException e) {
@@ -176,7 +172,7 @@ public class SlideExtractor {
             return getSlidesFromBinarySlideFile(ppt);
         }
         
-        catch (OfficeXmlFileException e) {
+        catch (UnsupportedFileFormatException | EmptyFileException | NotOLE2FileException e) {
             throw new InvalidSlideFileException("This file is an XML based file.");
         }
         catch (IOException e) {

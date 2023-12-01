@@ -117,6 +117,62 @@ public class ShowlyTest {
             // success
         }
     }
+    
+    @Test
+    public void isInvalidSlideFileExceptionThrownWhenPPTFilePathIsAnEmptyFile() throws IOException {
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/empty.ppt"));
+        showlyServer = new Showly(config);
+
+        try {
+            showlyServer.show();
+            showlyServer.stop();
+            fail("InvalidSlideFileException not thrown");
+        } catch (InvalidSlideFileException e) {
+            // success
+        }
+    }
+
+    @Test
+    public void isInvalidSlideFileExceptionThrownWhenPPTXFilePathIsAnEmptyFile() throws IOException {
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, getFilePath("/empty.pptx"));
+        showlyServer = new Showly(config);
+
+        try {
+            showlyServer.show();
+            showlyServer.stop();
+            fail("InvalidSlideFileException not thrown");
+        } catch (InvalidSlideFileException e) {
+            // success
+        }
+    }
+
+    @Test
+    public void isInvalidSlideFileExceptionThrownWhenPPTInputStreamIsAnEmptyFile() throws IOException {
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, new FileInputStream(getFilePath("/empty.ppt")));
+        showlyServer = new Showly(config);
+
+        try {
+            showlyServer.show();
+            showlyServer.stop();
+            fail("InvalidSlideFileException not thrown");
+        } catch (InvalidSlideFileException e) {
+            // success
+        }
+    }
+
+    @Test
+    public void isInvalidSlideFileExceptionThrownWhenPPTXInputStreamIsAnEmptyFile() throws IOException {
+        ShowlyConfig config = new ShowlyConfig(SHOWLY_TEST_PORT, new FileInputStream(getFilePath("/empty.pptx")));
+        showlyServer = new Showly(config);
+
+        try {
+            showlyServer.show();
+            showlyServer.stop();
+            fail("InvalidSlideFileException not thrown");
+        } catch (InvalidSlideFileException e) {
+            // success
+        }
+    }
 
     @Test
     public void slidesAsImagesCanBeRetrievedUsingHttpRequests() throws IOException, InvalidSlideFileException {
@@ -182,4 +238,5 @@ public class ShowlyTest {
 
         assertTrue(slides.size() == extractedSlides.size());
     }
+
 }
