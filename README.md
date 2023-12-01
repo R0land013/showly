@@ -28,7 +28,7 @@ For adding Showly to your project as a dependency you can add the following to y
 <dependency>
   <groupId>io.github.r0land013</groupId>
   <artifactId>showly</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
 </dependency>
 ```
 
@@ -36,7 +36,7 @@ If you are using Gradle, add this to your build.gradle:
 
 ```groovy
 dependencies {
-    implementation 'io.github.r0land013:showly:0.2.0'
+    implementation 'io.github.r0land013:showly:0.2.1'
 }
 ```
 
